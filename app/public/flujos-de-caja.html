@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="imgs/icon.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Car Wash - Flujos de caja</title>
+</head>
+
+<body
+    style="height: 100vh; background: rgb(120,4,16);  background: linear-gradient(-20deg, rgba(120,4,16,1) 0%, rgba(15,15,15,1) 100%); background-attachment: fixed;">
+    <div class="container-fluid  mt-1 px-5 ">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded-3">
+            <div class="container-fluid">
+                <!-- <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> -->
+                <a class="navbar-brand" href="/index"> Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/flujos-de-caja">Flujos de Caja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ordenes">Ordenes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/requerimientos">Requerimientos</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Control de trabajadores</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/asistencias">Asistencias</a></li>
+                                <li><a class="dropdown-item" href="/adelantos">Adelantos</a></li>
+                                <li><a class="dropdown-item" href="/bonos">Bonos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Contactos</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/clientes">Clientes</a></li>
+                                <li><a class="dropdown-item" href="/proveedores">Proveedores</a></li>
+                                <li><a class="dropdown-item" href="/trabajadores">Trabajadores</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/servicios">Servicios</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="container-fluid col-11">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-end my-3">
+                <div class="col-md-auto">
+                    <h1 style="margin-bottom: 0;" class="text-light"> Flujos de caja </h1>
+                </div>
+
+                <div class="col-md-auto">
+                    <a id="btn_create" class="btn btn-outline-light"> Crear </a>
+                </div>
+                <div class="col-2">
+                    <a id="btn_download" class="btn btn-outline-success">Descargar Tabla</a>
+                </div>
+                <div class="col" style="margin-left: -3rem;">
+                    <a id="btn_download_r" class="btn btn-outline-success">Descargar Resumen</a>
+                </div>
+                <div class="col-md-auto">
+                    <div class="d-flex align-items-center" style="margin-bottom: 0.5rem;">
+                        <label class="text-white pe-2" for="desde">Desde:</label>
+                        <input type="date" id="desde" name="desde">
+                    </div>
+                </div>
+                <div class="col-md-auto">
+                    <div class="d-flex align-items-center" style="margin-bottom: 0.5rem;">
+                        <label class="text-white pe-2" for="hasta">Hasta:</label>
+                        <input type="date" id="hasta" name="hasta">
+                    </div>
+                </div>
+                <!-- <div style="display: none;" class="col offset-auto">
+                    <input id="inputtosearch" style="margin-bottom: 0.3rem;" type="text" class="form-control"
+                        placeholder="Valor a buscar">
+                </div> -->
+            </div>
+        </div>
+
+        <table class="table table-bordered text-center table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="background-color: #921010;">Descripcion</th>
+                    <th scope="col" style="background-color: #921010;">Saldo Efectivo</th>
+                    <th scope="col" style="background-color: #921010;">Saldo VISA</th>
+                    <th scope="col" style="background-color: #921010;">Saldo TRANSFERRENCIA</th>
+                    <th scope="col" style="background-color: #921010;">Saldo YAPE</th>
+                    <th scope="col" style="background-color: #921010;">Saldo Total</th>
+                </tr>
+            </thead>
+            <tbody id="table_resumen">
+
+            </tbody>
+        </table>
+
+        <table class="table table-bordered text-center table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="background-color: #921010;">Fecha</th>
+                    <th scope="col" style="background-color: #921010;">Descripcion</th>
+                    <th scope="col" style="background-color: #921010;">Tipo de caja</th>
+                    <th scope="col" style="background-color: #921010;">Entrada</th>
+                    <th scope="col" style="background-color: #921010;">Salida</th>
+                    <th scope="col" style="background-color: #921010;">Hora</th>
+                    <th scope="col" style="background-color: #921010;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="data_table">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                </div>
+                <form id="form_clientes">
+                    <div class="modal-body">
+                        <input id="codigo" hidden>
+
+                        <label for="descripcion" class="col-form-label">Descripcion:</label>
+                        <textarea rows="3" class="form-control" id="descripcion" required></textarea>
+
+                        <label for="tipo_pago" class="col-form-label">Tipo de caja:</label>
+                        <select id="tipo_pago" class="form-select">
+                            <option value="1" selected>Efectivo</option>
+                            <option value="2">VISA</option>
+                            <option value="3">TRANSFERENCIA</option>
+                            <option value="4">YAPE</option>
+                        </select>
+
+                        <label for="valor" class="col-form-label">Valor:</label>
+                        <input type="number" class="form-control" id="valor" step=".01" required>
+
+                        <label for="hora" class="col-form-label">Hora:</label>
+                        <input type="time" class="form-control" id="hora">
+
+                        <label for="fecha" class="col-form-label">Fecha:</label>
+                        <input type="date" class="form-control" id="fecha">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btn_cancel" class="btn btn-secondary"
+                            data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        let opcion = null;
+        let codigo_c, descripcion, t_pago, tipo, valor, hora, fecha, csv_resumen, csv_resumen_r;
+        let total_ganancia = 0.0;
+        let total_efectivo = 1.0;
+        let total_visa = 2.0;
+        let total_transferecnia = 3.0;
+        let total_yape = 4.0;
+
+        const desde = document.querySelector('#desde');
+        const hasta = document.querySelector('#hasta');
+        const d = new Date();
+        let v_desde = "";
+        let v_hasta = "";
+        let dia = d.getDate();
+        let mes = d.getMonth() + 1;
+        let anio = d.getFullYear();
+        if (mes < 10)
+            v_hasta = anio + '-0' + mes;
+        else
+            v_hasta = anio + '-' + mes;
+
+        if (dia < 10) {
+            v_hasta += '-0' + dia;
+            dia = '0' + dia;
+        }
+        else
+            v_hasta += '-' + dia;
+
+        if (dia == 31) {
+            dia = 30;
+        }
+        if (dia >= 28 && mes == 3)
+            dia = 28;
+
+        if (mes <= 10)
+            if (mes == 1)
+                v_desde = (anio - 1) + '-12-' + dia;
+            else
+                v_desde = anio + '-0' + (mes - 1) + '-' + dia;
+        else
+            v_desde = anio + '-' + (mes - 1) + '-' + dia;
+
+        desde.value = v_desde;
+        hasta.value = v_hasta;
+
+        load_data();
+        setInterval(load_data, 2000);
+
+
+        //CREATE
+        $("#btn_create").click(function () {
+            opcion = 'crear';
+            codigo_c = null;
+            $("#form_clientes").trigger("reset");
+            $("#placas_form").html("");
+            $(".modal-header").css("background-color", "#23272b");
+            $(".modal-header").css("color", "white");
+            $(".modal-title").text("Agregar flujo de caja");
+            $('#modalCRUD').modal('show');
+            const d = new Date();
+            let dia = d.getDate();
+            let mes = d.getMonth() + 1;
+            const anio = d.getFullYear();
+            if (mes < 10)
+                mes = '0' + mes;
+            if (dia < 10)
+                dia = '0' + dia;
+            $('#fecha').val(anio + '-' + mes + '-' + dia);
+
+            let hour = d.getHours();
+            let minut = d.getMinutes();
+            if (hour < 10)
+                hour = '0' + hour;
+            if (minut < 10)
+                minut = '0' + minut;
+            $('#hora').val(hour + ':' + minut);
+            // fecha hora
+        });
+
+        //EDIT
+        $(document).ready(function () {
+            $(document).on("click", ".btn_edit", function () {
+                opcion = 'editar';
+                $("#placas_form").html("");
+                const row = $(this).closest("tr");
+                codigo_c = parseInt(row.find('td:eq(0)').text());
+                descripcion = row.find('td:eq(2)').text();
+                t_pago = row.find('td:eq(3)').text();
+                if (t_pago == 'YAPE')
+                    $('#tipo_pago').val('4');
+                else if (t_pago == 'TRANSFERENCIA')
+                    $('#tipo_pago').val('3');
+                else if (t_pago == 'VISA')
+                    $('#tipo_pago').val('2');
+                else
+                    $('#tipo_pago').val('1');
+                valor = row.find('td:eq(4)').text().split('S/.')[1];
+                // console.log(valor);
+                if (!valor)
+                    valor = row.find('td:eq(5)').text().split('S/.')[1];
+
+                hora = row.find('td:eq(6)').text();
+                fecha = row.find('td:eq(1)').text();
+                $("#codigo").val(codigo_c);
+                $("#descripcion").val(descripcion);
+                $("#valor").val(valor);
+                $("#hora").val(hora);
+                $("#fecha").val(fecha);
+                $(".modal-header").css("background-color", "#23272b");
+                $(".modal-header").css("color", "white");
+                $(".modal-title").text("Editar flujo de caja");
+                $('#modalCRUD').modal('show');
+            });
+        });
+
+        //DELETE
+        $(document).on("click", ".btn_delete", function () {
+            codigo_c = $(this).closest('tr').find('td:eq(0)').text();
+            Swal.fire({
+                title: '¿Confirma eliminar el registro?',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/flujo_de_caja/' + codigo_c, { method: 'DELETE' })
+                        .then(res => res.text());
+                    load_data();
+                    Swal.fire('¡Registro Eliminado!', '', 'success')
+                }
+            })
+        });
+
+        // boton CANCEL
+        $("#btn_cancel").click(function () {
+            $('#modalCRUD').modal('hide');
+        });
+
+        $("#btn_download").click(function () {
+            // csv_resumen = "alo,test\nalo2,test2";
+            const blob = new Blob([csv_resumen], {
+                type: 'text/csv'
+            });
+            if (window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveBlob(blob, "flujo_de_caja.csv");
+            } else {
+                const elem = window.document.createElement('a');
+                elem.href = window.URL.createObjectURL(blob);
+                elem.download = "flujo_de_caja.csv";
+                document.body.appendChild(elem);
+                elem.click();
+                document.body.removeChild(elem);
+            }
+        });
+
+        $("#btn_download_r").click(function () {
+            // csv_resumen = "alo,test\nalo2,test2";
+            const blob = new Blob([csv_resumen_r], {
+                type: 'text/csv'
+            });
+            if (window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveBlob(blob, "flujo_de_caja_resumen.csv");
+            } else {
+                const elem = window.document.createElement('a');
+                elem.href = window.URL.createObjectURL(blob);
+                elem.download = "flujo_de_caja_resumen.csv";
+                document.body.appendChild(elem);
+                elem.click();
+                document.body.removeChild(elem);
+            }
+        });
+
+
+        // form submit
+        $('#form_clientes').submit(function (e) {
+            e.preventDefault();
+            codigo_c = $.trim($('#codigo').val());
+            descripcion = $.trim($('#descripcion').val());
+            valor = $.trim($('#valor').val());
+            fecha = $.trim($('#fecha').val());
+            hora = $.trim($('#hora').val());
+            t_pago = $.trim($('#tipo_pago').val());
+
+            // verificacion
+            if (fecha.length == 0 || valor.length == 0) {
+                alert('El [fecha] y [descripcion] son obligatorios');
+                return;
+            };
+
+            if (opcion == 'crear') {
+                fetch('/flujo_de_caja', {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ descripcion, valor, fecha, hora, tipo_pago: t_pago })
+                })
+                    .then(res => res.text())
+                    .then(data => {
+                        Swal.fire('¡Registro Agregado!', '', 'success')
+                        load_data();
+                    });
+            }
+            if (opcion == 'editar') {
+                // Change data from cliente
+                fetch('/flujo_de_caja/' + codigo_c, {
+                    method: 'PUT',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ descripcion, valor, fecha, hora, tipo_pago: t_pago })
+                })
+                    .then(res => res.text())
+                    .then(data => {
+                        Swal.fire('¡Registro Modificado!', '', 'success')
+                        load_data();
+                    });
+            }
+            $('#modalCRUD').modal('hide');
+        });
+
+
+        // const input_search = document.querySelector('#inputtosearch');
+        // input_search.addEventListener('keyup', (event) => {
+        //     load_data();
+        // });
+
+
+        // desde.value= d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+        desde.addEventListener('change', (event) => {
+            load_data();
+        });
+        hasta.addEventListener('change', (event) => {
+            load_data();
+        });
+
+        function load_resumen() {
+            const l_desde = document.querySelector('#desde').value;
+            const l_hasta = document.querySelector('#hasta').value;
+            // const v_trabajador = document.querySelector('#select_trabajadores');
+            let descrip;
+
+            descrip = "Total de ganancia desde " + l_desde + " hasta " + l_hasta;
+
+            const table_resumen = document.querySelector('#table_resumen');
+            let html = `<tr> <td>${descrip}</td>`
+            html += `<td>S/.${Number(total_efectivo).toFixed(2)}</td>`
+            html += `<td>S/.${Number(total_visa).toFixed(2)}</td>`
+            html += `<td>S/.${Number(total_transferecnia).toFixed(2)}</td>`
+            html += `<td>S/.${Number(total_yape).toFixed(2)}</td>`
+            html += `<td>S/.${Number(total_ganancia).toFixed(2)}</td>`
+            table_resumen.innerHTML = html;
+        }
+
+        function load_data() {
+            // const v_search = document.querySelector('#inputtosearch').value;
+            total_ganancia = 0.0;
+            total_efectivo = 0.0;
+            total_visa = 0.0;
+            total_transferecnia = 0.0;
+            total_yape = 0.0;
+            const l_desde = document.querySelector('#desde').value;
+            const l_hasta = document.querySelector('#hasta').value;
+            const url = '/flujo_de_caja/' + l_desde + '/' + l_hasta;
+            csv_resumen = "Fecha,Descripcion,Tipo de caja,Entrada,Salida,Hora\n"
+            csv_resumen_r = "Tipo de Caja,Saldo\n"
+            fetch(url, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    const data_table = document.querySelector('#data_table');
+                    let html = '';
+                    data.forEach(element => {
+                        html += `<tr> <td hidden> ${element.codigo} </td>`;
+                        csv_resumen += element.fecha.substr(0, 10) + ',';
+                        html += `<td>${element.fecha.substr(0, 10)}</td>`;
+                        csv_resumen += element.descripcion + ',';
+                        html += `<td>${element.descripcion}</td>`;
+                        if (element.tipo_pago == '4') {
+                            csv_resumen += 'YAPE,'
+                            html += `<td>YAPE</td>`;
+                            total_yape += element.valor;
+                        }
+                        else if (element.tipo_pago == '3') {
+                            csv_resumen += 'TRANSFERENCIA,'
+                            html += `<td>TRANSFERENCIA</td>`;
+                            total_transferecnia += element.valor;
+                        }
+                        else if (element.tipo_pago == '2') {
+                            csv_resumen += 'VISA,'
+                            html += `<td>VISA</td>`;
+                            total_visa += element.valor;
+                        }
+                        else {
+                            csv_resumen += 'Efectivo,'
+                            html += `<td>Efectivo</td>`;
+                            total_efectivo += element.valor;
+                        }
+                        // html += `<td>VISA</td>`;
+
+
+                        if (element.valor >= 0) {
+                            html += `<td>S/.${Number(element.valor).toFixed(2)}</td>`;
+                            html += `<td></td>`;
+                            csv_resumen += Number(element.valor).toFixed(2) + ',,';
+                        }
+                        else {
+                            html += `<td></td>`;
+                            html += `<td>S/.${Number(element.valor).toFixed(2)}</td>`;
+                            csv_resumen += ',' + Number(element.valor).toFixed(2) + ',';
+                        }
+                        total_ganancia += element.valor;
+
+                        
+                        html += `<td>${element.hora}</td>`;
+                        csv_resumen += element.hora + '\n';
+                        html += `<td><a href='#'' class='btn btn-outline-light btn_edit'>editar</a> <a href='#'' class='btn btn-outline-danger btn_delete'>borrar</a></td>`;
+                    });
+
+                    csv_resumen_r += 'Saldo Efectivo,' + Number(total_efectivo).toFixed(2) + '\n';
+                    csv_resumen_r += 'Saldo VISA,' + Number(total_visa).toFixed(2) + '\n';
+                    csv_resumen_r += 'Saldo TRANSFERENCIA,' + Number(total_transferecnia).toFixed(2) + '\n';
+                    csv_resumen_r += 'Saldo YAPE,' + Number(total_yape).toFixed(2) + '\n';
+                    csv_resumen_r += 'Saldo Total,' + Number(total_ganancia).toFixed(2) + '\n';
+
+
+                    data_table.innerHTML = html;
+                    load_resumen();
+                });
+        }
+    </script>
+</body>
+
+</html>

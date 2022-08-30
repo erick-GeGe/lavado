@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="imgs/icon.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Car Wash - Trabajadores</title>
+</head>
+
+<body
+    style="height: 100vh; background: rgb(120,4,16);  background: linear-gradient(-20deg, rgba(120,4,16,1) 0%, rgba(15,15,15,1) 100%); background-attachment: fixed;">
+    <div class="container-fluid  mt-1 px-5 ">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded-3">
+            <div class="container-fluid">
+                <!-- <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> -->
+                <a class="navbar-brand" href="/index"> Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/flujos-de-caja">Flujos de Caja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ordenes">Ordenes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/requerimientos">Requerimientos</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Control de trabajadores</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/asistencias">Asistencias</a></li>
+                                <li><a class="dropdown-item" href="/adelantos">Adelantos</a></li>
+                                <li><a class="dropdown-item" href="/bonos">Bonos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Contactos</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/clientes">Clientes</a></li>
+                                <li><a class="dropdown-item" href="/proveedores">Proveedores</a></li>
+                                <li><a class="dropdown-item" href="/trabajadores">Trabajadores</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/servicios">Servicios</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="container-fluid col-11">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-end my-3">
+                <div class="col-md-auto">
+                    <h1 style="margin-bottom: 0;" class="text-light"> Trabajadores </h1>
+                </div>
+                <div class="col">
+                    <a id="btn_create" class="btn btn-outline-light"> Crear </a>
+                </div>
+                <div class="col-md-auto">
+                    <div class="d-flex align-items-center">
+                        <label class="text-white pe-2 ">Ordenar por: </label>
+                        <select id="select_order" class="form-select">
+                            <option value="1" selected>Por defecto</option>
+                            <option value="2">Apellido</option>
+                            <option value="3">Nombre</option>
+                            <option value="4">Antiguedad</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <input id="inputtosearch" style="margin-bottom: 0.3rem;" type="text" class="form-control"
+                        placeholder="Palabra a buscar">
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table table-bordered text-center table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="background-color: #921010;">Nombre</th>
+                    <th scope="col" style="background-color: #921010;">Telefono</th>
+                    <th scope="col" style="background-color: #921010;">Sueldo</th>
+                    <th scope="col" style="background-color: #921010;">Descripcion</th>
+                    <th scope="col" style="background-color: #921010;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="data_table">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                </div>
+                <form id="form_clientes">
+                    <div class="modal-body">
+                        <input id="codigo" hidden>
+
+                        <label for="first_name" class="col-form-label">Primer nombre:</label>
+                        <input type="text" class="form-control" id="first_name" required>
+
+                        <label for="second_name" class="col-form-label">Segundo nombre:</label>
+                        <input type="text" class="form-control" id="second_name">
+
+                        <label for="last_name" class="col-form-label">Apellido paterno:</label>
+                        <input type="text" class="form-control" id="last_name" required>
+
+                        <label for="m_last_name" class="col-form-label">Apellido materno:</label>
+                        <input type="text" class="form-control" id="m_last_name">
+
+                        <label for="telefono" class="col-form-label">Telefono</label>
+                        <input id="telefono" type="number" class="form-control">
+
+                        <label for="sueldo" class="col-form-label">Sueldo</label>
+                        <input id="sueldo" type="number" class="form-control" step=".01">
+
+                        <label for="descripcion" class="col-form-label">Descripcion</label>
+                        <textarea rows="2" class="form-control" id="descripcion"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btn_cancel" class="btn btn-secondary"
+                            data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        let opcion = null;
+        let codigo_c, primer_nombre, segundo_nombre, apellido_paterno, apellido_materno, telefono, sueldo, descripcion
+        load_data();
+        setInterval(load_data, 2000);
+
+        //CREATE
+        $("#btn_create").click(function () {
+            opcion = 'crear';
+            codigo_c = null;
+            $("#form_clientes").trigger("reset");
+            $("#placas_form").html("");
+            $(".modal-header").css("background-color", "#23272b");
+            $(".modal-header").css("color", "white");
+            $(".modal-title").text("Agregar trabajador");
+            $('#modalCRUD').modal('show');
+        });
+
+        //EDIT
+        $(document).ready(function () {
+            $(document).on("click", ".btn_edit", function () {
+                opcion = 'editar';
+                $("#placas_form").html("");
+                const row = $(this).closest("tr");
+                codigo_c = parseInt(row.find('td:eq(0)').text());
+                name = row.find('td:eq(1)').text();
+                // separate names
+                let names = name.split(" ");
+                //load placas
+                telefono = row.find('td:eq(2)').text();
+                sueldo = row.find('td:eq(3)').text().split('S/.')[1];
+                descripcion = row.find('td:eq(4)').text();
+
+                $("#codigo").val(codigo_c);
+                $("#first_name").val(names[0]);
+                // set names depending of the existings
+                if (names.length == 4) {
+                    $("#second_name").val(names[1]);
+                    $("#last_name").val(names[2]);
+                    $("#m_last_name").val(names[3]);
+                }
+                else if (names.length == 3) {
+                    $("#last_name").val(names[1]);
+                    $("#m_last_name").val(names[2]);
+                }
+                else if (names.length == 2) {
+                    $("#last_name").val(names[1]);
+                }
+                $("#telefono").val(telefono);
+                $("#sueldo").val(sueldo);
+                $("#descripcion").val(descripcion);
+
+                $(".modal-header").css("background-color", "#23272b");
+                $(".modal-header").css("color", "white");
+                $(".modal-title").text("Editar trabajador");
+                $('#modalCRUD').modal('show');
+            });
+        });
+
+        //DELETE
+        $(document).on("click", ".btn_delete", function () {
+            codigo_c = $(this).closest('tr').find('td:eq(0)').text();
+            Swal.fire({
+                title: '¿Confirma eliminar el registro?',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/trabajador/' + codigo_c, { method: 'DELETE' })
+                        .then(res => res.text());
+                    load_data();
+                    Swal.fire('¡Registro Eliminado!', '', 'success')
+                }
+            })
+        });
+
+        // boton CANCEL
+        $("#btn_cancel").click(function () {
+            $('#modalCRUD').modal('hide');
+        });
+
+        // form submit
+        $('#form_clientes').submit(function (e) {
+            e.preventDefault();
+            codigo_c = $.trim($('#codigo').val());
+            primer_nombre = $.trim($('#first_name').val());
+            segundo_nombre = $.trim($('#second_name').val());
+            apellido_paterno = $.trim($('#last_name').val());
+            apellido_materno = $.trim($('#m_last_name').val());
+            telefono = $.trim($('#telefono').val());
+            sueldo = parseFloat($.trim($('#sueldo').val()));
+            descripcion = $.trim($('#descripcion').val());
+
+            // verificacion 
+            if(primer_nombre.length == 0 || apellido_paterno.length == 0){
+                alert('El [primero nombre] y el [apellido paterno] son obligatorios');
+                return;
+            };
+
+            if (opcion == 'crear') {
+                fetch('/trabajador', {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ primer_nombre, segundo_nombre, apellido_paterno, apellido_materno, telefono, sueldo, descripcion})
+                })
+                    .then(res => res.text())
+                    .then(data => {
+                        Swal.fire('¡Registro Agregado!', '', 'success')
+                        load_data();
+                    });
+            }
+            if (opcion == 'editar') {
+                // Change data from cliente
+                fetch('/trabajador/' + codigo_c, {
+                    method: 'PUT',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ primer_nombre, segundo_nombre, apellido_paterno, apellido_materno, telefono, sueldo, descripcion})
+                })
+                    .then(res => res.text())
+                    .then(data => {
+                        Swal.fire('¡Registro Modificado!', '', 'success')
+                        load_data();
+                    });
+            }
+            $('#modalCRUD').modal('hide');
+        });
+
+        const btn_selector = document.querySelector('#select_order');
+        btn_selector.addEventListener('change', (event) => {
+            load_data();
+        });
+
+        const input_search = document.querySelector('#inputtosearch');
+        input_search.addEventListener('keyup', (event) => {
+            load_data();
+        });
+
+        function load_data() {
+            const v_order = document.querySelector('#select_order').value;
+            const v_search = document.querySelector('#inputtosearch').value;
+            fetch('/trabajador/' + v_order + '/' + v_search, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    const data_table = document.querySelector('#data_table');
+                    let html = '';
+                    data.forEach(element => {
+                        html += `<tr> <td hidden> ${element.codigo} </td>`;
+                        html += `<td>${element.name}</td>`;
+                        html += `<td>${element.telefono}</td>`;
+                        html += `<td>S/.${Number(element.sueldo).toFixed(2)}</td>`;
+                        html += `<td>${element.descripcion}</td>`;
+                        html += `<td><a href='#'' class='btn btn-outline-light btn_edit'>editar</a> <a href='#'' class='btn btn-outline-danger btn_delete'>borrar</a></td>`;
+                    });
+                    data_table.innerHTML = html;
+                });
+        }
+    </script>
+</body>
+
+</html>

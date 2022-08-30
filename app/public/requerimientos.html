@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="imgs/icon.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Car Wash - Requerimientos</title>
+</head>
+
+<body
+    style="height: 100vh; background: rgb(120,4,16);  background: linear-gradient(-20deg, rgba(120,4,16,1) 0%, rgba(15,15,15,1) 100%); background-attachment: fixed;">
+    <div class="container-fluid  mt-1 px-5 ">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded-3">
+            <div class="container-fluid">
+                <!-- <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> -->
+                <a class="navbar-brand" href="/index"> Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/flujos-de-caja">Flujos de Caja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ordenes">Ordenes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/requerimientos">Requerimientos</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Control de trabajadores</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/asistencias">Asistencias</a></li>
+                                <li><a class="dropdown-item" href="/adelantos">Adelantos</a></li>
+                                <li><a class="dropdown-item" href="/bonos">Bonos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Contactos</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/clientes">Clientes</a></li>
+                                <li><a class="dropdown-item" href="/proveedores">Proveedores</a></li>
+                                <li><a class="dropdown-item" href="/trabajadores">Trabajadores</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/servicios">Servicios</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="container-fluid col-11">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-end my-3">
+                <div class="col col-lg-3">
+                    <h1 style="margin-bottom: 0;" class="text-light"> Requerimientos </h1>
+                </div>
+
+                <div class="col col-lg-1">
+                    <a id="btn_create" class="btn btn-outline-light"> Crear </a>
+                </div>
+                <div class="col col-lg-2">
+                    <div class="d-flex align-items-center" style="margin-bottom: 0.5rem;">
+                        <label class="text-white pe-2" for="desde">Desde:</label>
+                        <input type="date" id="desde" name="desde">
+                    </div>
+                </div>
+                <div class="col col-lg-2">
+                    <div class="d-flex align-items-center" style="margin-bottom: 0.5rem;">
+                        <label class="text-white pe-2" for="hasta">Hasta:</label>
+                        <input type="date" id="hasta" name="hasta">
+                    </div>
+                </div>
+                <div class="col col-lg-2">
+                    <div class="d-flex align-items-center">
+                        <label class="text-white pe-2 ">Prioridad: </label>
+                        <select id="select_priority" class="form-select">
+                            <option value="4" selected>Todos</option>
+                            <option value="1">Prioridad baja</option>
+                            <option value="2">Prioridad normal</option>
+                            <option value="3">Prioridad alta</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col col-lg-2">
+                    <div class="d-flex align-items-center">
+                        <label class="text-white pe-2 ">Estado: </label>
+                        <select id="select_state" class="form-select">
+                            <option value="4" selected>Todos</option>
+                            <option value="1">En proceso</option>
+                            <option value="2">Terminado</option>
+                            <option value="3">Con retraso</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="col">
+                    <input id="inputtosearch" style="margin-bottom: 0.3rem;" type="text" class="form-control"
+                        placeholder="Valor a buscar">
+                </div> -->
+            </div>
+        </div>
+
+
+        <table class="table table-bordered text-center table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="background-color: #921010;">Descripcion</th>
+                    <th scope="col" style="background-color: #921010;">Prioridad</th>
+                    <th scope="col" style="background-color: #921010;">Pedido</th>
+                    <th scope="col" style="background-color: #921010;">Costo</th>
+                    <th scope="col" style="background-color: #921010;">FechaPedido</th>
+                    <th scope="col" style="background-color: #921010;">FechaEntrega</th>
+                    <th scope="col" style="background-color: #921010;">Estado</th>
+                    <th scope="col" style="background-color: #921010;">Proveedor</th>
+                    <th scope="col" style="background-color: #921010;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="data_table">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                </div>
+                <form id="form_clientes">
+                    <div class="modal-body">
+                        <input id="codigo" hidden>
+                        <input id="codigo_proveedor" hidden>
+
+                        <div id="display_flujo">
+                            <label class="col-form-label my-2">Flujo de caja:</label>
+                            <input type="checkbox" id="agregar_flujo" value="agregar_flujo" name="agregar_flujo"
+                                checked>
+                            <label for="agregar_flujo">Agregar</label> <br>
+                        </div>
+
+                        <label for="select_proveedores" class="col-form-label">Proveedores:</label>
+                        <select id="select_proveedores" class="form-select">
+                            <!-- <option value="0">Todos</option>
+                            <option value="0">En proceso</option>
+                            <option value="1">Culminados</option> -->
+                        </select>
+
+                        <label for="descripcion" class="col-form-label">Descripcion:</label>
+                        <textarea rows="2" class="form-control" id="descripcion" required></textarea>
+
+
+                        <label for="urgencia" class="col-form-label">Prioridad:</label>
+                        <select id="urgencia" class="form-select">
+                            <option value="1" selected>Baja</option>
+                            <option value="2">Normal</option>
+                            <option value="3">Muy urgente</option>
+                        </select>
+
+                        <label for="pedido" class="col-form-label">Pedido:</label>
+                        <textarea rows="4" class="form-control" id="pedido"></textarea>
+                        <!-- <input type="text" class="form-control" id="pedido"> -->
+
+                        <label for="costo" class="col-form-label">Costo:</label>
+                        <input type="number" class="form-control" id="costo" step=".01" required>
+
+                        <label for="fecha_pedido" class="col-form-label">Fecha pedido:</label>
+                        <input type="date" class="form-control" id="fecha_pedido">
+
+                        <label for="estado" class="col-form-label">Estado:</label>
+                        <select id="estado" class="form-select">
+                            <option value="1" selected>En proceso</option>
+                            <option value="2">Terminado</option>
+                            <option value="3">Con retraso</option>
+                        </select>
+
+
+                        <!-- <label class="col-form-label my-2">Estado:</label>
+                        <input type="checkbox" id="estado" value="Estado" name="estado">
+                        <label for="estado">Terminado</label> <br> -->
+                        <!-- <label for="estado" class="col-form-label">Estado:</label> -->
+
+                        <!-- <input type="checkbox" id="scales" name="scales" checked > -->
+                        <!-- <label for="scales">Scales</label> -->
+                        <label for="fecha_entrega" class="col-form-label">Fecha entrega:</label>
+                        <input type="date" class="form-control" id="fecha_entrega">
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btn_cancel" class="btn btn-secondary"
+                            data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        let opcion = null;
+        let codigo_p, codigo_c, descripcion, pedido, costo, urgencia, fecha_pedido, fecha_entrega, estado, proveedor, hora;
+
+        const desde = document.querySelector('#desde');
+        const hasta = document.querySelector('#hasta');
+        const d = new Date();
+        let v_desde = "";
+        let v_hasta = "";
+        let dia = d.getDate();
+        let mes = d.getMonth() + 1;
+        let anio = d.getFullYear();
+        if (mes < 10)
+            v_hasta = anio + '-0' + mes;
+        else
+            v_hasta = anio + '-' + mes;
+
+        if (dia < 10) {
+            v_hasta += '-0' + dia;
+            dia = '0' + dia;
+        }
+        else
+            v_hasta += '-' + dia;
+
+        if (dia == 31) {
+            dia = 30;
+        }
+        if (dia >= 28 && mes == 3)
+            dia = 28;
+
+        if (mes <= 10)
+            if (mes == 1)
+                v_desde = (anio - 1) + '-12-' + dia;
+            else
+                v_desde = anio + '-0' + (mes - 1) + '-' + dia;
+        else
+            v_desde = anio + '-' + (mes - 1) + '-' + dia;
+
+        desde.value = v_desde;
+        hasta.value = v_hasta;
+
+        load_proveedores();
+        load_data();
+        setInterval(load_data, 2000);
+        setInterval(load_proveedores, 5000);
+        //CREATE
+        $("#btn_create").click(function () {
+            opcion = 'crear';
+            codigo_c = null;
+            $("#form_clientes").trigger("reset");
+            $("#placas_form").html("");
+            $(".modal-header").css("background-color", "#23272b");
+            $(".modal-header").css("color", "white");
+            $(".modal-title").text("Agregar requerimiento");
+            $('#modalCRUD').modal('show');
+            $("#display_flujo").css("display", "block");
+            const d = new Date();
+            let dia = d.getDate();
+            let mes = d.getMonth() + 1;
+            const anio = d.getFullYear();
+            if (mes < 10)
+                mes = '0' + mes;
+            if (dia < 10)
+                dia = '0' + dia;
+            $('#fecha_pedido').val(anio + '-' + mes + '-' + dia);
+
+            let hour = d.getHours();
+            let minut = d.getMinutes();
+            if (hour < 10)
+                hour = '0' + hour;
+            if (minut < 10)
+                minut = '0' + minut;
+            hora = hour + ':' + minut;
+
+        });
+
+        //EDIT
+        $(document).ready(function () {
+            $(document).on("click", ".btn_edit", function () {
+                opcion = 'editar';
+                $("#placas_form").html("");
+                const row = $(this).closest("tr");
+                codigo_c = parseInt(row.find('td:eq(0)').text());
+                codigo_p = parseInt(row.find('td:eq(1)').text());
+                descripcion = row.find('td:eq(2)').text();
+                urgencia = row.find('td:eq(3)').text();
+                if (urgencia == "Baja")
+                    urgencia = '1';
+                else if (urgencia == "Normal")
+                    urgencia = '2';
+                else if (urgencia == "Muy urgente")
+                    urgencia = '3';
+                pedido = row.find('td:eq(4)').text();
+                costo = row.find('td:eq(5)').text().split('S/.')[1];
+                fecha_pedido = row.find('td:eq(6)').text();
+                fecha_entrega = row.find('td:eq(7)').text();
+
+                estado = row.find('td:eq(8)').text();
+                if (estado == 'En proceso')
+                    estado = '1';
+                else if (estado == 'Terminado')
+                    estado = '2';
+                else
+                    estado = '3';
+
+                // proveedor = row.find('td:eq(9)').text();
+                $("#codigo").val(codigo_c);
+                $("#descripcion").val(descripcion);
+                $("#urgencia").val(urgencia);
+                $("#pedido").val(pedido);
+                $("#estado").val(estado);
+                $("#costo").val(costo);
+                $("#fecha_pedido").val(fecha_pedido);
+                $("#fecha_entrega").val(fecha_entrega);
+
+                $("#select_proveedores").val(codigo_p);
+                $(".modal-header").css("background-color", "#23272b");
+                $(".modal-header").css("color", "white");
+                $(".modal-title").text("Editar requerimiento");
+                $("#display_flujo").css("display", "none");
+                $('#modalCRUD').modal('show');
+            });
+        });
+
+        //DELETE
+        $(document).on("click", ".btn_delete", function () {
+            codigo_c = $(this).closest('tr').find('td:eq(0)').text();
+            Swal.fire({
+                title: '¿Confirma eliminar el registro?',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/requerimiento/' + codigo_c, { method: 'DELETE' })
+                        .then(res => res.text());
+                    load_data();
+                    Swal.fire('¡Registro Eliminado!', '', 'success')
+                }
+            })
+        });
+
+        // boton CANCEL
+        $("#btn_cancel").click(function () {
+            $('#modalCRUD').modal('hide');
+        });
+
+
+
+        // form submit
+        $('#form_clientes').submit(function (e) {
+            e.preventDefault();
+            codigo_c = $.trim($('#codigo').val());
+            descripcion = $.trim($('#descripcion').val());
+            urgencia = $.trim($('#urgencia').val());
+            pedido = $.trim($('#pedido').val());
+            costo = $.trim($('#costo').val());
+            estado = $.trim($('#estado').val());
+            fecha_pedido = $.trim($('#fecha_pedido').val());
+            fecha_entrega = $.trim($('#fecha_entrega').val());
+
+            if (costo.length == 0) {
+                alert('El [costo] es obligatorio');
+                return;
+            };
+
+            // const estado_check_v = document.querySelector('#estado');
+            // if (estado_check_v.checked)
+            //     estado = '1';
+            // else
+            //     estado = '0';
+            proveedor = $.trim($('#select_proveedores').val());
+
+            if (opcion == 'crear') {
+                fetch('/requerimiento', {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ descripcion, urgencia, pedido, costo, fecha_pedido, fecha_entrega, estado, proveedor })
+                })
+                    .then(res => res.text())
+                    .then(data => {
+                        Swal.fire('¡Registro Agregado!', '', 'success')
+                        load_data();
+                    });
+                if (document.querySelector('#agregar_flujo').checked) {
+                    descripcion = "REQUERIMIENTO - " + descripcion;
+                    fetch('/flujo_de_caja', {
+                        method: 'POST',
+                        headers: { 'Content-type': 'application/json' },
+                        body: JSON.stringify({ descripcion, 'valor': -costo, hora, tipo_pago:'1', 'fecha': fecha_pedido })
+                    })
+                        .then(res => res.text());
+                }
+            }
+            if (opcion == 'editar') {
+                // Change data from cliente
+                fetch('/requerimiento/' + codigo_c, {
+                    method: 'PUT',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ descripcion, urgencia, pedido, costo, fecha_pedido, fecha_entrega, estado, proveedor })
+                })
+                    .then(res => res.text())
+                    .then(data => {
+                        Swal.fire('¡Registro Modificado!', '', 'success')
+                        load_data();
+                    });
+            }
+            $('#modalCRUD').modal('hide');
+        });
+
+
+        const btn_priority = document.querySelector('#select_priority');
+        btn_priority.addEventListener('change', (event) => {
+            load_data();
+        });
+        const btn_state = document.querySelector('#select_state');
+        btn_state.addEventListener('change', (event) => {
+            load_data();
+        });
+
+        desde.addEventListener('change', (event) => {
+            load_data();
+        });
+        hasta.addEventListener('change', (event) => {
+            load_data();
+        });
+
+        function load_data() {
+            const v_priority = document.querySelector('#select_priority').value;
+            const v_state = document.querySelector('#select_state').value;
+            const l_desde = document.querySelector('#desde').value;
+            const l_hasta = document.querySelector('#hasta').value;
+            const url = '/requerimiento/' + v_priority + '/' + v_state + '/' + l_desde + '/' + l_hasta;
+            fetch(url, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    const data_table = document.querySelector('#data_table');
+                    let html = '';
+                    data.forEach(element => {
+                        console.log(element.estado);
+                        html += `<tr> <td hidden> ${element.codigo} </td>`;
+                        html += `<td hidden> ${element.codigo_proveedor} </td>`;
+                        html += `<td>${element.descripcion}</td>`;
+                        if (element.urgencia == '1')
+                            html += `<td>Baja</td>`;
+                        else if (element.urgencia == '2')
+                            html += `<td>Normal</td>`;
+                        else if (element.urgencia == '3')
+                            html += `<td>Muy urgente</td>`;
+                        html += `<td>${element.pedido}</td>`;
+                        html += `<td>S/.${Number(element.costo).toFixed(2)}</td>`;
+                        html += `<td>${element.fecha_pedido.substr(0, 10)}</td>`;
+                        if (element.fecha_entrega)
+                            html += `<td>${element.fecha_entrega.substr(0, 10)}</td>`;
+                        else
+                            html += `<td></td>`;
+                        if (element.estado == '1')
+                            html += `<td>En proceso</td>`;
+                        else if (element.estado == '2')
+                            html += `<td>Terminado</td>`;
+                        else
+                            html += `<td>Con retraso</td>`;
+
+                        html += `<td>${element.proveedor}</td>`;
+                        html += `<td><a href='#'' class='btn btn-outline-light btn_edit'>editar</a> <a href='#'' class='btn btn-outline-danger btn_delete'>borrar</a></td>`;
+                    });
+                    data_table.innerHTML = html;
+                });
+        }
+
+        function load_proveedores() {
+            const v_priority = document.querySelector('#select_priority').value;
+            const v_state = document.querySelector('#select_state').value;
+            const l_desde = document.querySelector('#desde').value;
+            const l_hasta = document.querySelector('#hasta').value;
+
+            fetch('/proveedor/1', { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    const data_table = document.querySelector('#select_proveedores');
+                    let html = '';
+                    data.forEach(element => {
+                        html += `<option value="${element.codigo}">`
+                        html += `${element.name.split(" ")[0]} ${element.name.split(" ")[2]}</option>`;
+                    });
+                    data_table.innerHTML = html;
+                });
+        }
+    </script>
+</body>
+
+</html>

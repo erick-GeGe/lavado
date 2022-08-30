@@ -1,0 +1,2 @@
+npm install -g nodemon
+npm install express ejs mysql nodemon dotenv bcryptjs express-session express-mysql-session

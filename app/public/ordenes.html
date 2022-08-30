@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="imgs/icon.png" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Car Wash - Ordenes</title>
+</head>
+
+<body
+    style="height: 100vh; background: rgb(120,4,16);  background: linear-gradient(-20deg, rgba(120,4,16,1) 0%, rgba(15,15,15,1) 100%); background-attachment: fixed;">
+    <div class="container-fluid  mt-1 px-5 ">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded-3">
+            <div class="container-fluid">
+                <!-- <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> -->
+                <a class="navbar-brand" href="/index"> Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/flujos-de-caja">Flujos de Caja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/ordenes">Ordenes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/requerimientos">Requerimientos</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Control de
+                                trabajadores</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/asistencias">Asistencias</a></li>
+                                <li><a class="dropdown-item" href="/adelantos">Adelantos</a></li>
+                                <li><a class="dropdown-item" href="/bonos">Bonos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Contactos</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/clientes">Clientes</a></li>
+                                <li><a class="dropdown-item" href="/proveedores">Proveedores</a></li>
+                                <li><a class="dropdown-item" href="/trabajadores">Trabajadores</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/servicios">Servicios</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="container-fluid col-11">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-end my-3">
+                <div class="col-md-auto">
+                    <h1 style="margin-bottom: 0;" class="text-light"> Ordenes </h1>
+                </div>
+
+                <div class="col-2">
+                    <a id="btn_create" class="btn btn-outline-light"> Crear </a>
+                </div>
+                <div class="col-2">
+                    <div class="d-flex align-items-center" style="margin-bottom: 0.5rem;">
+                        <label class="text-white pe-2" for="desde">Desde:</label>
+                        <input type="date" id="desde" name="desde">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="d-flex align-items-center" style="margin-bottom: 0.5rem;">
+                        <label class="text-white pe-2" for="hasta">Hasta:</label>
+                        <input type="date" id="hasta" name="hasta">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex align-items-center">
+                        <label class="text-white pe-2">Clientes: </label>
+                        <input id="inputtosearch_c" style="margin-bottom: 0rem;" type="text" class="form-control"
+                            placeholder="Cliente a buscar">
+                        <select id="select_clientes" class="form-select" style="margin-left: 0.5rem;">
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <table class="table table-bordered text-center table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="background-color: #921010;">Fecha</th>
+                    <th scope="col" style="background-color: #921010;">Consumo total</th>
+                    <th scope="col" style="background-color: #921010;">Tipo de pago</th>
+                    <th scope="col" style="background-color: #921010;">Hora</th>
+                    <th scope="col" style="background-color: #921010;">Cliente</th>
+                    <th scope="col" style="background-color: #921010;">Servicios</th>
+                    <th scope="col" style="background-color: #921010;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="data_table">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                </div>
+                <form id="form_clientes">
+                    <div class="modal-body">
+                        <input id="codigo" hidden>
+
+                        <div id="display_flujo">
+                            <label class="col-form-label my-2">Flujo de caja:</label>
+                            <input type="checkbox" id="agregar_flujo" value="agregar_flujo" name="agregar_flujo"
+                                checked>
+                            <label for="agregar_flujo">Agregar</label> <br>
+                        </div>
+
+                        <!-- <input id="codigo_t" hidden> -->
+
+
+                        <div class="row mt-1 mb-1">
+                            <label for="select_clientes_form" class="col-form-label col-lg-2">Clientes:</label>
+                            <input class="col-lg-4" id="inputtosearch_f" style="margin-bottom: 0rem;" type="text"
+                                class="form-control" placeholder="Cliente a buscar">
+                        </div>
+                        <select id="select_clientes_form" class="form-select">
+                        </select>
+
+                        <input type="button" id="btn_add_consumo" value="Agregar consumo"
+                            class="btn btn-secondary mt-2">
+                        <div id="consumos_form">
+                        </div>
+
+                        <label for="tipo_pago" class="col-form-label">Tipo de caja:</label>
+                        <select id="tipo_pago" class="form-select">
+                            <option value="1" selected>Efectivo</option>
+                            <option value="2">VISA</option>
+                            <option value="3">TRANSFERENCIA</option>
+                            <option value="4">YAPE</option>
+                        </select>
+
+                        <label for="consumo_total" class="col-form-label">Consumo total:</label>
+                        <input type="number" class="form-control" id="consumo_total" step=".01">
+
+                        <label for="hora" class="col-form-label">Hora:</label>
+                        <input type="time" class="form-control" id="hora">
+
+                        <label for="fecha" class="col-form-label">Fecha:</label>
+                        <input type="date" class="form-control" id="fecha">
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btn_cancel" class="btn btn-secondary"
+                            data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script language="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.23/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        let opcion = null;
+        let codigo_t, codigo_c, consumo_total, tipo_pago, fecha, hora, cliente, servicios;
+        let total = 0.0;
+        let borrar = [];
+        const workers = {};
+
+        const desde = document.querySelector('#desde');
+        const hasta = document.querySelector('#hasta');
+        const d = new Date();
+        let v_desde = "";
+        let v_hasta = "";
+        let dia = d.getDate();
+        let mes = d.getMonth() + 1;
+        let anio = d.getFullYear();
+        if (mes < 10)
+            v_hasta = anio + '-0' + mes;
+        else
+            v_hasta = anio + '-' + mes;
+
+        if (dia < 10) {
+            v_hasta += '-0' + dia;
+            dia = '0' + dia;
+        }
+        else
+            v_hasta += '-' + dia;
+
+        if (dia == 31) {
+            dia = 30;
+        }
+        if (dia >= 28 && mes == 3)
+            dia = 28;
+
+        if (mes <= 10)
+            if (mes == 1)
+                v_desde = (anio - 1) + '-12-' + dia;
+            else
+                v_desde = anio + '-0' + (mes - 1) + '-' + dia;
+        else
+            v_desde = anio + '-' + (mes - 1) + '-' + dia;
+
+        desde.value = v_desde;
+        hasta.value = v_hasta;
+
+        load_clientes();
+        load_clientes_form();
+        load_data();
+        setInterval(load_data, 2000);
+        setInterval(load_clientes_form, 5000);
+
+        //CREATE
+        $("#btn_create").click(function () {
+            opcion = 'crear';
+            codigo_c = null;
+            total = 0.0;
+
+            $("#form_clientes").trigger("reset");
+            $("#consumos_form").html("");
+            $(".modal-header").css("background-color", "#23272b");
+            $(".modal-header").css("color", "white");
+            $(".modal-title").text("Agregar orden");
+            $("#display_flujo").css("display", "block");
+            $('#modalCRUD').modal('show');
+
+            const d = new Date();
+            let dia = d.getDate();
+            let mes = d.getMonth() + 1;
+            const anio = d.getFullYear();
+            if (mes < 10)
+                mes = '0' + mes;
+            if (dia < 10)
+                dia = '0' + dia;
+            let hour = d.getHours();
+            let minut = d.getMinutes();
+            if (hour < 10)
+                hour = '0' + hour;
+            if (minut < 10)
+                minut = '0' + minut;
+
+            $('#fecha').val(anio + '-' + mes + '-' + dia);
+            $('#hora').val(hour + ':' + minut);
+
+            crearconsumo();
+            let agregado = false;
+            fetch('/servicio', { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(element => {
+                        if (!agregado) {
+                            total += element.costo;
+                            agregado = true;
+                            $("#consumo_total").val(Number(total).toFixed(2));
+                        }
+                    });
+                });
+
+        });
+
+        //EDIT
+        $(document).ready(function () {
+            $(document).on("click", ".btn_edit", function () {
+                opcion = 'editar';
+                codigo_borrar = [];
+                $("#consumos_form").html("");
+                const row = $(this).closest("tr");
+                codigo_t = parseInt(row.find('td:eq(0)').text());
+                codigo_c = parseInt(row.find('td:eq(1)').text());
+                // consumo_total = row.find('td:eq(2)').text();
+                fecha = row.find('td:eq(2)').text();
+                consumo_total = row.find('td:eq(3)').text().split('S/.')[1];
+                tipo_pago = row.find('td:eq(4)').text();
+                // console.log(tipo_pago);
+                if (tipo_pago == 'YAPE')
+                    $('#tipo_pago').val('4');
+                else if (tipo_pago == 'TRANSFERENCIA')
+                    $('#tipo_pago').val('3');
+                else if (tipo_pago == 'VISA')
+                    $('#tipo_pago').val('2');
+                else
+                    $('#tipo_pago').val('1');
+                hora = row.find('td:eq(5)').text();
+                $("#codigo").val(codigo_t);
+                $("#select_clientes_form").val(codigo_c);
+                $("#consumo_total").val(consumo_total);
+                $("#hora").val(hora);
+                $("#fecha").val(fecha);
+
+                fetch('/orden-servicio/' + codigo_t, { method: 'GET' })
+                    .then(res => res.text())
+                    .then(data => {
+                        data = JSON.parse(data);
+                        data.forEach(element => {
+                            crearconsumo();
+                        });
+                        setTimeout(() => {
+                            fetch('/orden-servicio/' + codigo_t, { method: 'GET' })
+                                .then(res => res.text())
+                                .then(data => {
+                                    data = JSON.parse(data);
+                                    let index = 0;
+                                    data.forEach(element => {
+                                        const ids = document.getElementsByClassName("ids_form");
+                                        const placas = document.getElementsByClassName("select_carro_form");
+                                        const servicios = document.getElementsByClassName("select_servicio_form");
+                                        const costos = document.getElementsByClassName("select_servicio_form_v");
+
+                                        ids[index].value = element.codigo;
+                                        placas[index].value = element.codigo_auto;
+                                        servicios[index].value = element.codigo_servicio;
+                                        costos[index].value = element.codigo_servicio;
+
+                                        ++index;
+                                    });
+                                });
+                        }, 100);
+
+
+                    });
+
+
+
+
+                $(".modal-header").css("background-color", "#23272b");
+                $(".modal-header").css("color", "white");
+                $(".modal-title").text("Editar Cliente");
+                $("#display_flujo").css("display", "none");
+                $('#modalCRUD').modal('show');
+            });
+        });
+
+
+
+        //DELETE
+        $(document).on("click", ".btn_delete", function () {
+            codigo_c = $(this).closest('tr').find('td:eq(0)').text();
+            Swal.fire({
+                title: '¿Confirma eliminar el registro?',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/orden/' + codigo_c, { method: 'DELETE' })
+                        .then(res => res.text());
+                    load_data();
+                    Swal.fire('¡Registro Eliminado!', '', 'success')
+                }
+            })
+        });
+
+        // boton CANCEL
+        $("#btn_cancel").click(function () {
+            $('#modalCRUD').modal('hide');
+        });
+
+        // form submit
+        $('#form_clientes').submit(function (e) {
+            e.preventDefault();
+            codigo_t = $.trim($('#codigo').val());
+            codigo_c = $.trim($('#select_clientes_form').val());
+            consumo_total = $.trim($('#consumo_total').val());
+            fecha = $.trim($('#fecha').val());
+            tipo_pago = $.trim($('#tipo_pago').val());
+            hora = $.trim($('#hora').val());
+
+            const ids = [];
+            const placas = [];
+            const servicios = [];
+            const collect_ids = document.getElementsByClassName("ids_form");
+            const collect_placas = document.getElementsByClassName("select_carro_form");
+            const collect_servicios = document.getElementsByClassName("select_servicio_form");
+
+            for (let index = 0; index < collect_ids.length; index++) {
+                ids.push(collect_ids[index].value);
+                placas.push(collect_placas[index].value);
+                servicios.push(collect_servicios[index].value);
+
+            }
+
+            if (opcion == 'crear') {
+                fetch('/orden', {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ consumo_total, fecha, tipo_pago, hora, 'codigo_cliente': codigo_c })
+                })
+                    .then(res => res.text())
+                    .then(data => {
+
+                        fetch('/orden-last', {
+                            method: 'GET',
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                codigo_t = data[0].max;
+                                setTimeout(() => {
+                                    for (let index = 0; index < servicios.length; index++) {
+                                        fetch('/orden-servicio', {
+                                            method: 'POST',
+                                            headers: { 'Content-type': 'application/json' },
+                                            body: JSON.stringify({ 'codigo_orden': codigo_t, 'codigo_servicio': servicios[index], 'codigo_auto': placas[index] })
+                                        })
+                                            .then(res => res.text())
+                                    };
+                                    Swal.fire('¡Registro Agregado!', '', 'success')
+                                    load_data();
+                                }, 100);
+                            });
+                    });
+                if (document.querySelector('#agregar_flujo').checked) {
+                    const descripcion = "ORDEN - " + $.trim($('#select_clientes_form option:selected').text());
+                    fetch('/flujo_de_caja', {
+                        method: 'POST',
+                        headers: { 'Content-type': 'application/json' },
+                        body: JSON.stringify({ descripcion, 'valor': consumo_total, hora, tipo_pago, fecha })
+                    })
+                        .then(res => res.text());
+                }
+
+            }
+            if (opcion == 'editar') {
+                // Change data from cliente
+                fetch('/orden/' + codigo_t, {
+                    method: 'PUT',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ consumo_total, fecha, hora, tipo_pago, 'codigo_cliente': codigo_c })
+                })
+                    .then(res => res.text())
+                    .then(data => {
+
+                        for (let index = 0; index < borrar.length; index++) {
+                            fetch('/orden-servicio/' + borrar[index], { method: 'DELETE' })
+                                .then(res => res.text());
+                        };
+
+                        for (let index = 0; index < servicios.length; index++) {
+                            if (ids[index] == '') {
+                                fetch('/orden-servicio', {
+                                    method: 'POST',
+                                    headers: { 'Content-type': 'application/json' },
+                                    body: JSON.stringify({ 'codigo_orden': codigo_t, 'codigo_servicio': servicios[index], 'codigo_auto': placas[index] })
+                                })
+                                    .then(res => res.text())
+                            } else {
+                                fetch('/orden-servicio/' + ids[index], {
+                                    method: 'PUT',
+                                    headers: { 'Content-type': 'application/json' },
+                                    body: JSON.stringify({ 'codigo_orden': codigo_t, 'codigo_servicio': servicios[index], 'codigo_auto': placas[index] })
+                                })
+                                    .then(res => res.text())
+                            }
+
+                        };
+
+                        setTimeout(() => {
+                            Swal.fire('¡Registro Agregado!', '', 'success')
+                            load_data();
+                            borrar = [];
+                        }, 100);
+
+                        // Swal.fire('¡Registro Modificado!', '', 'success')
+                        // load_data();
+                    });
+            }
+            $('#modalCRUD').modal('hide');
+        });
+
+        const btn_add_consumo = document.querySelector('#btn_add_consumo');
+        btn_add_consumo.addEventListener('click', (event) => {
+            crearconsumo();
+            let agregado = false;
+            fetch('/servicio', { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(element => {
+                        if (!agregado) {
+                            total += element.costo;
+                            agregado = true;
+                            $("#consumo_total").val(Number(total).toFixed(2));
+                        }
+                    });
+                });
+
+        });
+
+        function crearconsumo() {
+            const placas = document.querySelector('#consumos_form');
+
+            const div = document.createElement('div');
+            // id codigo-servicio
+            const element_id = document.createElement('input');
+            element_id.hidden = true;
+            element_id.classList.add('ids_form');
+            element_id.type = 'text';
+            element_id.value = '';
+
+            // carro
+            const element_l = document.createElement('label');
+            element_l.classList.add('col-form-label');
+            element_l.classList.add('col-3');
+            element_l.classList.add('me-3');
+            element_l.classList.add('my-0');
+            element_l.textContent = 'Placa:';
+
+            const element_c = document.createElement('select');
+            element_c.classList.add('select_carro_form');
+            element_c.classList.add('col-form-label');
+            element_c.classList.add('me-3');
+            element_c.classList.add('col-3');
+
+            // servicio
+            const element_s = document.createElement('label');
+            element_s.classList.add('col-form-label');
+            element_s.classList.add('col-3');
+            element_s.classList.add('me-3');
+            element_l.classList.add('my-0');
+            element_s.textContent = 'Servicio:';
+
+            const element_ss = document.createElement('select');
+            element_ss.classList.add('select_servicio_form');
+            element_ss.classList.add('col-form-label');
+            element_ss.classList.add('col-md-auto');
+            element_ss.classList.add('mt-0');
+
+
+            const element_ss_v = document.createElement('select');
+            element_ss_v.disabled = true;
+            element_ss_v.classList.add('select_servicio_form_v');
+            element_ss_v.classList.add('col-form-label');
+            element_ss_v.classList.add('col-md-auto');
+            element_ss_v.classList.add('mx-2');
+
+            // cancel button
+            const element_btn = document.createElement('input');
+            element_btn.classList.add('col-2');
+            element_btn.classList.add('btn_delete_consumo');
+            element_btn.classList.add('btn');
+            element_btn.classList.add('my-0');
+            element_btn.classList.add('mx-5');
+            element_btn.classList.add('btn-outline-danger');
+            element_btn.value = "Eliminar";
+            element_btn.type = 'button';
+
+            // // servicio
+            // const element_i = document.createElement('input');
+            // element_i.classList.add('form-control');
+            // element_i.classList.add('placa_form');
+            // element_i.type = 'text';
+            const client_id = $.trim($('#select_clientes_form').val());
+            // load carros
+            let hmtl_carros = "";
+            fetch('/carro/' + client_id, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    // const select_trabajadores_form = document.querySelector('#select_trabajadores_form');
+                    // let html2 = "";
+                    data.forEach(element => {
+                        hmtl_carros += `<option value="${element.codigo}">`
+                        // html2 += `<option value="${element.codigo}">`
+                        hmtl_carros += `${element.placa}</option>`;
+                        // html2 += `${element.name.split(" ")[0]} ${element.name.split(" ")[2]}</option>`;
+                        // workers[element.codigo] = element.name.split(" ")[0] + ' ' + element.name.split(" ")[2];
+                    });
+                    element_c.innerHTML = hmtl_carros;
+                    // select_trabajadores_form.innerHTML = html2;
+                });
+
+
+            // load servicios
+            let hmtl_servicios = "";
+            let hmtl_servicios_valor = "";
+            fetch('/servicio', { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    // const select_trabajadores_form = document.querySelector('#select_trabajadores_form');
+                    // let html2 = "";
+                    data.forEach(element => {
+                        hmtl_servicios += `<option value="${element.codigo}">`
+                        hmtl_servicios_valor += `<option value="${element.codigo}">`
+                        // html2 += `<option value="${element.codigo}">`
+                        hmtl_servicios += `${element.nombre}</option>`;
+
+                        hmtl_servicios_valor += `S/.${Number(element.costo).toFixed(2)}</option>`;
+                        // html2 += `${element.name.split(" ")[0]} ${element.name.split(" ")[2]}</option>`;
+                        // workers[element.codigo] = element.name.split(" ")[0] + ' ' + element.name.split(" ")[2];
+                    });
+                    element_ss.innerHTML = hmtl_servicios;
+                    element_ss_v.innerHTML = hmtl_servicios_valor;
+                    // select_trabajadores_form.innerHTML = html2;
+                });
+
+            // element_ss.val ='3';
+            div.appendChild(element_id);
+            div.appendChild(element_l);
+            div.appendChild(element_s);
+            div.appendChild(element_btn);
+            div.appendChild(element_c);
+            div.appendChild(element_ss);
+            div.appendChild(element_ss_v);
+            placas.appendChild(div);
+        }
+
+        $(document).on("change", ".select_servicio_form", function () {
+            const node_parent = $(this).parent().get(0);
+            node_parent.childNodes[6].value = $(this)[0].value;
+
+            update_total();
+        });
+
+        function update_total() {
+            total = 0.0;
+            const collect = $(".select_servicio_form_v option:selected");
+            for (let index = 0; index < collect.length; index++) {
+                total += parseFloat(collect[index].text.split('S/.')[1]);
+            }
+            $("#consumo_total").val(Number(total).toFixed(2));
+        }
+
+
+        $(document).on("click", ".btn_delete_consumo", function () {
+            // const my = ;
+
+            const node_parent = $(this).parent().get(0);
+            const codigo_borrar = node_parent.childNodes[0].value;
+
+            borrar.push(codigo_borrar);
+
+            // just delete node in html
+            Swal.fire({
+                title: '¿Confirma eliminar este consumo?',
+                showCancelButton: true,
+                confirmButtonText: `Confirmar`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const parent_parent = node_parent.parentNode;
+                    parent_parent.removeChild(node_parent);
+                }
+                update_total();
+            })
+
+        });
+
+        const input_search_c = document.querySelector('#inputtosearch_c');
+        input_search_c.addEventListener('keyup', (event) => {
+            load_clientes();
+        });
+        const input_search_f = document.querySelector('#inputtosearch_f');
+        input_search_f.addEventListener('keyup', (event) => {
+            load_clientes_form();
+        });
+        const btn_trabajadores = document.querySelector('#select_clientes');
+        btn_trabajadores.addEventListener('change', (event) => {
+            load_data();
+        });
+
+        const select_clientes_form = document.querySelector('#select_clientes_form');
+        select_clientes_form.addEventListener('change', (event) => {
+            const client_id = $.trim($('#select_clientes_form').val());
+            let hmtl_carros = "";
+            fetch('/carro/' + client_id, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(element => {
+                        hmtl_carros += `<option value="${element.codigo}">`
+                        hmtl_carros += `${element.placa}</option>`;
+                    });
+                    const select_carro_form = document.getElementsByClassName("select_carro_form");
+                    for (let index = 0; index < select_carro_form.length; index++) {
+                        select_carro_form[index].innerHTML = hmtl_carros;
+                    }
+                });
+        });
+
+
+
+        desde.addEventListener('change', (event) => {
+            load_data();
+        });
+        hasta.addEventListener('change', (event) => {
+            load_data();
+        });
+
+
+        function load_data() {
+            const l_desde = document.querySelector('#desde').value;
+            const l_hasta = document.querySelector('#hasta').value;
+            const v_clientes = document.querySelector('#select_clientes').value;
+            let url = '/orden/' + l_desde + '/' + l_hasta + '/';
+            if (v_clientes.length == 0) {
+                url += '0'
+            }
+            else {
+                url += v_clientes
+            }
+            fetch(url, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    const data_table = document.querySelector('#data_table');
+                    let html = '';
+                    data.forEach(element => {
+                        console.log(element);
+                        html += `<tr> <td hidden> ${element.codigo} </td>`;
+                        html += `<td hidden> ${element.codigo_cliente} </td>`;
+                        html += `<td>${element.fecha.substr(0, 10)}</td>`;
+                        html += `<td>S/.${Number(element.consumo_total).toFixed(2)}</td>`;
+                        if (element.tipo_pago == '4') {
+                            html += `<td>YAPE</td>`;
+                        }
+                        else if (element.tipo_pago == '3') {
+                            html += `<td>TRANSFERENCIA</td>`;
+                        }
+                        else if (element.tipo_pago == '2') {
+                            html += `<td>VISA</td>`;
+                        }
+                        else {
+                            html += `<td>Efectivo</td>`;
+                        }
+
+                        html += `<td>${element.hora}</td>`;
+                        html += `<td>${element.cliente}</td>`;
+                        html += `<td>`;
+                        for (let index = 0; index < element.servicios.length; index++) {
+                            html += `${element.servicios[index]} - ${element.carros[index]}<br>`;
+                        }
+                        html += `</td>`;
+                        html += `<td><a href='#'' class='btn btn-outline-light btn_edit'>editar</a> <a href='#'' class='btn btn-outline-danger btn_delete'>borrar</a></td></tr>`;
+                    });
+                    data_table.innerHTML = html;
+                });
+        }
+
+        function load_clientes() {
+            const input_search_c = document.querySelector('#inputtosearch_c');
+            fetch('/cliente/1/' + input_search_c.value, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    const data_table = document.querySelector('#select_clientes');
+                    let html = "<option value='0' selected>Todos</option>";
+                    data.forEach(element => {
+                        html += `<option value="${element.codigo}">`
+                        html += `${element.name.split(" ")[0]} ${element.name.split(" ")[1]} ${element.name.split(" ")[2]}</option>`;
+                        workers[element.codigo] = element.name.split(" ")[0] + ' ' + element.name.split(" ")[2];
+                    });
+                    data_table.innerHTML = html;
+                });
+        }
+
+        function load_clientes_form() {
+            const input_search_c = document.querySelector('#inputtosearch_f');
+            fetch('/cliente/1/' + input_search_c.value, { method: 'GET' })
+                .then(res => res.json())
+                .then(data => {
+                    const data_table = document.querySelector('#select_clientes_form');
+                    let html = "";
+                    data.forEach(element => {
+                        html += `<option value="${element.codigo}">`
+                        html += `${element.name.split(" ")[0]} ${element.name.split(" ")[1]} ${element.name.split(" ")[2]}</option>`;
+                        workers[element.codigo] = element.name.split(" ")[0] + ' ' + element.name.split(" ")[2];
+                    });
+                    data_table.innerHTML = html;
+                });
+        }
+    </script>
+</body>
+
+</html>
